@@ -58,8 +58,8 @@ sprite abrir_arquivo(char *nome_arquivo)
 	int linhas = atoi(strtok(NULL, " "));   // Depois lê a parte 2 da string, a quantidade de linhas
 	fgets(texto, 20, arquivo);				// Lê a quantidade de cores, não é ncessária
 	/*
-	A variável colunas indica quantos pixels de altura terá o sprite.
-	E a variavél linhas indica quantos pixels de largura.
+	A variável colunas indica quantos pixels de largura terá o sprite.
+	E a variavél linhas indica quantos pixels de altura.
 	Logo, a quantidade de pixels é colunas * linhas;
 	Cada pixel tem 3 cores: Red, Green e Blue (RGB), e cada linha do arquivo
 	presenta uma cor. Então a cada 3 linhas do arquivo, representa um pixel
