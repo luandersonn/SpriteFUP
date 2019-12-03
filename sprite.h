@@ -15,3 +15,6 @@ typedef struct sprite
 
 /* Abre o arquivo e cria o sprite */
 sprite abrir_arquivo(char *nome_arquivo);
+void desenhar_imagem(sprite *cenario, sprite *sprite, pixel *pixelFundo, int deslocamentoLinhas, int deslocamentoColunas);
+int comparar_pixels(pixel *pixel1, pixel *pixel2);
+void salvar_sprite(sprite *sprite, char *nome_arquivo);
