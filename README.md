@@ -1,5 +1,4 @@
-##### Universidade Federal do Ceará - Fundamentos de Programação
-##### Prof. Rafael Ivo
+#### Universidade Federal do Ceará - Fundamentos de Programação - Prof. Rafael Ivo
 
 # Trabalho Parcial 3A – Combinação de Sprites
 
