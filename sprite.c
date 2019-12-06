@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "sprite.h"
-
 
 sprite *abrir_arquivo(char *nome_arquivo)
 {

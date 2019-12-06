@@ -1,4 +1,4 @@
-#include "sprite.c"
+#include "sprite.h"
 
 int main()
 {

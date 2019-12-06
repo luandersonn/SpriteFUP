@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 /* Representa um pixel da imagem */
 typedef struct pixel
 {
