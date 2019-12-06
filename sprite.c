@@ -3,42 +3,8 @@
 #include <string.h>
 #include "sprite.h"
 
-int main()
-{
-	printf("Digite o nome do arquivo de cenario: ");
-	char nome_arquivo[50];
-	scanf("%s", nome_arquivo);
-	sprite cenario = abrir_arquivo(nome_arquivo);
 
-	printf("Digite o nome do arquivo do sprite 1");
-	scanf("%s", nome_arquivo);
-	sprite sprite1 = abrir_arquivo(nome_arquivo);
-	pixel cor_de_fundo_1;
-	printf("Digite a cor de fundo RGB (primeiro o R): ");
-	int cor;
-	scanf("%d", &cor);
-	cor_de_fundo_1.R = cor;
-	printf("Agora digite a cor G: ");
-	scanf("%d", &cor);
-	cor_de_fundo_1.G = cor;
-	printf("Por fim digite a cor B: ");
-	scanf("%d", &cor);
-	cor_de_fundo_1.B = cor;
-		
-	int linhaDeslocamento;
-	int colunaDeslocamento;
-	printf("Digite o deslocamento (primeiro de cima pra baixo): ");
-	scanf("%d", &linhaDeslocamento);
-	printf("Agora gigite o deslocamento da esquerda pra direita: ");
-	scanf("%d", &colunaDeslocamento);
-	
-	desenhar_imagem(&cenario, &sprite1, &cor_de_fundo_1, linhaDeslocamento, colunaDeslocamento);
-	salvar_sprite(&cenario, "resultado.ppm");
-
-	return 0;
-}
-
-sprite abrir_arquivo(char *nome_arquivo)
+sprite *abrir_arquivo(char *nome_arquivo)
 {
 	/*
 	strtok - Split string into tokens
@@ -51,6 +17,9 @@ sprite abrir_arquivo(char *nome_arquivo)
 
 	// Abre o arquivo
 	FILE *arquivo = fopen(nome_arquivo, "r");
+	if(arquivo == NULL) 
+		return NULL; // Arquivo não encontrado
+	
 	char texto[20];
 	fgets(texto, 20, arquivo);				// Lê a primeira linha, que é "P3", não é necessária
 	fgets(texto, 20, arquivo);				// lê a string  que tem a quantidade de colunas e linhas do sprite
@@ -65,11 +34,11 @@ sprite abrir_arquivo(char *nome_arquivo)
 	presenta uma cor. Então a cada 3 linhas do arquivo, representa um pixel
 	 */
 
-	sprite sprite;
-	sprite.colunas = colunas;
-	sprite.linhas = linhas;
+	sprite *sprite = malloc(sizeof(sprite)); // Inicializa o ponteiro
+	sprite->colunas = colunas;
+	sprite->linhas = linhas;
 	// Aloca um vetor de pixels do tamano colunas * linhas
-	sprite.pixels = malloc((colunas * linhas) * sizeof(pixel));
+	sprite->pixels = malloc((colunas * linhas) * sizeof(pixel));
 
 	for (int i = 0; i < (linhas * colunas); i++)
 	{
@@ -81,8 +50,9 @@ sprite abrir_arquivo(char *nome_arquivo)
 		pixel.R = red;
 		pixel.G = green;
 		pixel.B = blue;
-		sprite.pixels[i] = pixel;
+		sprite->pixels[i] = pixel;
 	}
+	printf("Sprite aberto - %dx%d\n", sprite->colunas, sprite->linhas);
 	return sprite;
 }
 
@@ -90,8 +60,8 @@ void desenhar_imagem(sprite *cenario, sprite *sprite, pixel *pixelFundo, int des
 {
 	int contador = 0;
 	for (int i = 0; i < sprite->linhas; i++)
-	{
-		int indice = ((deslocamentoLinhas - 1) * cenario->colunas) + deslocamentoColunas - 1;
+	{		
+		int indice = ((deslocamentoLinhas - 1) * cenario->colunas) + deslocamentoColunas - 1;		
 		for (int j = 0; j < sprite->colunas; j++)
 		{
 
@@ -104,9 +74,11 @@ void desenhar_imagem(sprite *cenario, sprite *sprite, pixel *pixelFundo, int des
 	}
 }
 
-void salvar_sprite(sprite *sprite, char *nome_arquivo)
+int salvar_sprite(sprite *sprite, char *nome_arquivo)
 {
 	FILE *arquivo = fopen(nome_arquivo, "w");
+	if(arquivo == NULL)
+		return 0;
 	fprintf(arquivo, "P3\n%d %d\n255\n", sprite->colunas, sprite->linhas);
 	int i = 0;
 	for (i = 0; i < sprite->colunas * sprite->linhas; i++)
@@ -114,6 +86,7 @@ void salvar_sprite(sprite *sprite, char *nome_arquivo)
 		pixel pixel = sprite->pixels[i];
 		fprintf(arquivo, "%d\n%d\n%d\n", pixel.R, pixel.G, pixel.B);
 	}
+	return 1;
 }
 int comparar_pixels(pixel *pixel1, pixel *pixel2)
 {
