@@ -28,7 +28,7 @@ sprite *abrir_arquivo(char *nome_arquivo)
 	Logo, a quantidade de pixels é colunas * linhas;
 	Cada pixel tem 3 cores: Red, Green e Blue (RGB), e cada linha do arquivo
 	presenta uma cor. Então a cada 3 linhas do arquivo, representa um pixel
-	 */
+	*/
 
 	sprite *sprite = malloc(sizeof(sprite)); // Inicializa o ponteiro
 	sprite->colunas = colunas;

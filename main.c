@@ -68,7 +68,7 @@ int main()
     scanf("%s", nome_arquivo);
     while ((salvar_sprite(cenario, nome_arquivo)) == 0)
     {
-        printf("Nao foi possivel salvar o arquivo com este nome, tente novamente: ");
+        printf("Nao foi possivel salvar o arquivo com este nome, tente novamente com outro nome: ");
         scanf("%s", nome_arquivo);
     }
     printf("Salvo");
